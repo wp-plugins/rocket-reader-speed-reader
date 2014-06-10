@@ -8,8 +8,8 @@ Author URI: http://cagewebdev.com
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.0
 Tested up to: 3.9.1
-Stable tag: 0.3
-Version: 0.3
+Stable tag: 1.0.1
+Version: 1.0.1
 
 == Description ==
 
@@ -47,13 +47,7 @@ No warranty, use at own risk!
 
 == Changelog ==
 
-= 0.3 [06/10/2014] =
-* Oops, forgot to add the javascript and stylesheet while deploying the plugin...
-
-= 0.2 [06/10/2014] =
-* Some cosmetic fixes for the readme file
-
-= 0.1 [06/09/2014] =
+= 1.0.1 [06/10/2014] =
 * INITIAL RELEASE
 
 == Frequently Asked Questions ==

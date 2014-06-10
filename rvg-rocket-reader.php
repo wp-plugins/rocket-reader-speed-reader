@@ -1,9 +1,9 @@
 <?php
-$rr_version      = '0.3';
+$rr_version      = '1.0.1';
 $rr_release_date = '06/10/2014';
 /**
  * @package Rocket Reader
- * @version 0.3
+ * @version 1.0.1
  */
  
 /*
@@ -11,7 +11,7 @@ Plugin Name: Rocket Reader
 Plugin URI: http://cagewebdev.com/rocket-reader/
 Description: Adds a control to read the text of posts and pages using a speed reading technique
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
-Version: 0.3
+Version: 1.0.1
 Author URI: http://cagewebdev.com
 */
 
@@ -133,8 +133,8 @@ function rr_options_page()
 *********************************************************************************************/
 function rr_load_scripts_styles()
 {
-	wp_enqueue_script('rr_rocket', plugin_dir_url(__FILE__) . 'js/rr_rocket.js',array('jquery'),'0.1',true);
-	wp_enqueue_style ('rr', plugin_dir_url(__FILE__) . 'stylesheet/rr_rocket.css',false,'0.1','all');
+	wp_enqueue_script('rr_rocket', plugin_dir_url(__FILE__) . 'rr_rocket.js',array('jquery'),'0.1',true);
+	wp_enqueue_style ('rr', plugin_dir_url(__FILE__) . 'rr_rocket.css',false,'0.1','all');
 	
 } // rr_load_scripts_styles()
 
