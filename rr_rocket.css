@@ -1,0 +1,46 @@
+@charset "utf-8";
+/* CSS Document */
+.rr_wrapper {
+	margin-bottom: 10px;
+}
+.rr_reading_pane {
+	display: none;
+	overflow: hidden;
+	height: 100px;
+	background-color: #EFEFEF;
+	border: solid 1px #999999;
+	margin-bottom: 10px;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 36px;
+	font-weight: bold;
+}
+.rr_word {
+	display: inline-block;
+	position: relative;
+}
+.rr_delay {
+	display: none;
+	float: left;
+	position: relative;
+}
+.rr_button_container {
+	float: right;
+	text-align: right;
+}
+.rr_playing_controls {
+	display: none;
+}
+.rr_button {
+	float: right;
+	margin-left: 5px;	
+}
+.rr_btn_play {
+	display: none;
+	float: right;
+	margin-left: 5px;
+}
+.rr_credits {
+	display: none;
+	font-size: 10px;
+	font-style: italic;
+}
