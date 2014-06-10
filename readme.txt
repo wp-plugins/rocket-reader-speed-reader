@@ -8,8 +8,8 @@ Author URI: http://cagewebdev.com
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.0
 Tested up to: 3.9.1
-Stable tag: 0.2
-Version: 0.2
+Stable tag: 0.3
+Version: 0.3
 
 == Description ==
 
@@ -46,6 +46,9 @@ No warranty, use at own risk!
 * Change the settings (if needed) in the WP Admin Panel &raquo; Settings &raquo; Rocket Reader Opts.
 
 == Changelog ==
+
+= 0.3 [06/10/2014] =
+* Oops, forgot to add the javascript and stylesheet while deploying the plugin...
 
 = 0.2 [06/10/2014] =
 * Some cosmetic fixes for the readme file
