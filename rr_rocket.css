@@ -1,5 +1,9 @@
+/********************************************************************************************
+
+	ROCKET READER STYLES
+
+*********************************************************************************************/
 @charset "utf-8";
-/* CSS Document */
 .rr_wrapper {
 	margin-bottom: 10px;
 }
@@ -12,7 +16,6 @@
 	margin-bottom: 10px;
 	font-family: "Courier New", Courier, monospace;
 	font-size: 36px;
-	font-weight: bold;
 }
 .rr_word {
 	display: inline-block;

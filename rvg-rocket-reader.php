@@ -1,9 +1,9 @@
 <?php
-$rr_version      = '1.1';
-$rr_release_date = '06/10/2014';
+$rr_version      = '1.1.1';
+$rr_release_date = '06/11/2014';
 /**
  * @package Rocket Reader
- * @version 1.1
+ * @version 1.1.1
  */
  
 /*
@@ -11,7 +11,7 @@ Plugin Name: Rocket Reader
 Plugin URI: http://cagewebdev.com/rocket-reader/
 Description: Adds a control to read the text of posts and pages using a speed reading technique
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
-Version: 1.1
+Version: 1.1.1
 Author URI: http://cagewebdev.com
 */
 
@@ -157,8 +157,7 @@ function rr_add_control($content)
 	// (HAVE TO DO THIS BECAUSE JAVASCRIPT DOESN'T SUPPORT UNICODE REGEX YET...)
 	$return = '<script type="text/javascript">
 	var words'.get_the_ID().' = [';
-	// preg_match_all("/[\p{L}\p{M}\{0-9}\{-|_|\&#8217;|'|’|?|!}]+/u", strip_tags($content), $result, PREG_PATTERN_ORDER);	
-	preg_match_all("/[\p{L}\p{M}\{0-9}\{-|_|'|’|?|!}]+/u", $c, $result, PREG_PATTERN_ORDER);
+	preg_match_all("/[\p{L}\p{M}\{0-9}\{-|'|’|?|!}]+/u", $c, $result, PREG_PATTERN_ORDER);
 	for ($i = 0; $i < count($result[0]); $i++)
 	{	if($i) $return .= ',';
 		$w = $result[0][$i];
@@ -195,6 +194,9 @@ function rr_add_control($content)
 			<div id="rr_btn_minus'.get_the_ID().'" class="rr_button">
 			  <button onclick="rr_minus();" title="decrease speed">-</button>
 			</div>
+			<div id="rr_btn_bold'.get_the_ID().'" class="rr_button">
+			  <button onclick="rr_font_weight();" title="bold on/off">b</button>
+			</div>			
 		</div>	
 	</div>
 	<div id="rr_delay'.get_the_ID().'"></div>
@@ -214,6 +216,8 @@ function rr_add_control($content)
 *********************************************************************************************/
 function init_rocket_reader()
 {
+	global $rr_version;
+	
 	$initWPM = get_option("rr_wpm");
 	if(!$initWPM) $initWPM = 300;
 	
@@ -230,14 +234,16 @@ function init_rocket_reader()
 	if(!$initFPcolor) $initFPcolor = "#FF0000";
 	
 	$output = '
+<!-- START Rocket Reader v' . $rr_version . ' [' . $rr_release_date . '] | http://cagewebdev.com/rocket-reader | Rolf van Gelder -->
 <script type="text/javascript">
-// Initialize the Rocket Reader
-var initWPM = '.$initWPM.';
-var initTextcolor = "'.$initTextcolor.'";
-var initBgcolor = "'.$initBgcolor.'";
-var initBordercolor = "'.$initBordercolor.'";
-var initFPcolor = "'.$initFPcolor.'";
+var rr_init_WPM = '.$initWPM.';
+var rr_init_textcolor = "'.$initTextcolor.'";
+var rr_init_bgcolor = "'.$initBgcolor.'";
+var rr_init_bordercolor = "'.$initBordercolor.'";
+var rr_init_fp_color = "'.$initFPcolor.'";
 </script>
+<!-- END Rocket Reader -->
+
 ';
 
   echo $output;
