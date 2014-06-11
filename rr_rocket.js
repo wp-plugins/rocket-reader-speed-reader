@@ -5,7 +5,7 @@
 *********************************************************************************************/
 
 // WPM FROM OPTIONS (WPM)
-var wpm      = initWPM;
+var wpm      = rr_init_WPM;
 var delay_ms = parseInt(60000 / wpm);	// DELAY BETWEEN WORDS (MILLISECONDS)
 
 jQuery( document ).ready(function() {
@@ -19,6 +19,12 @@ jQuery( document ).ready(function() {
 	var tmp = getCookie("rr_wpm");
 	if(typeof tmp != "undefined" && tmp != '' && tmp != 'NaN') wpm = parseInt(tmp);
 	delay_ms = 60000 / wpm;
+	
+	// SET FONT WEIGHT, BASED ON A COOKIE
+	var tmp = getCookie("rr_font_weight");
+	var fw  = 400;
+	if(typeof tmp != "undefined" && tmp != '' && tmp != 'NaN') fw = parseInt(tmp);
+	jQuery(".rr_reading_pane").css("font-weight", fw);
 
 	// DISPLAY PLAY BUTTONS WHEN PAGE IS FULLY LOADED
 	jQuery(".rr_btn_play").show();
@@ -113,6 +119,19 @@ jQuery( document ).ready(function() {
 		rr_show_speed();		
 	} // rr_plus()
 	
+	
+	/****************************************************************************************
+	 *
+	 *	BOLD BUTTON PRESSED: TOGGLE NORMAL / BOLD
+	 *
+	 ****************************************************************************************/	
+	rr_font_weight = function() {
+		var fw = jQuery(".rr_reading_pane").css("font-weight");
+		if(fw == 400) fw = 700; else fw = 400;
+		jQuery(".rr_reading_pane").css("font-weight", fw);
+		document.cookie="rr_font_weight="+fw+"; expires=Thu, 5 Dec 2999 12:00:00 GMT; path=/";
+	} // rr_font_weight()
+	
 
 	/****************************************************************************************
 	 *
@@ -158,8 +177,8 @@ jQuery( document ).ready(function() {
 			wrd = rr_mark_orp(wrd, orp);
 
 			// SET BACKGROUND COLOR, BASED ON THE OPTION IN THE DATABASE
-			jQuery("#rr_reading_pane"+currentPostID).css("background-color", initBgcolor);
-			jQuery("#rr_reading_pane"+currentPostID).css("border-color", initBordercolor);			
+			jQuery("#rr_reading_pane"+currentPostID).css("background-color", rr_init_bgcolor);
+			jQuery("#rr_reading_pane"+currentPostID).css("border-color", rr_init_bordercolor);			
 			
 			// CALCULATE THE LEFT POS OF THE WORD BASED ON THE ORP
 			var widthRP  = jQuery("#rr_reading_pane"+currentPostID).width()/2;
@@ -172,7 +191,7 @@ jQuery( document ).ready(function() {
 			jQuery("#rr_word"+currentPostID).css("top", heightRP+"px");
 			
 			// SET THE TEXT COLOR, BASED ON THE OPTION IN THE DATABASE
-			jQuery("#rr_word"+currentPostID).css("color", initTextcolor);
+			jQuery("#rr_word"+currentPostID).css("color", rr_init_textcolor);
 			
 			// STUFF THE WORD IN
 			jQuery("#rr_word"+currentPostID).html(wrd);
@@ -196,7 +215,7 @@ jQuery( document ).ready(function() {
 	rr_mark_orp = function (wrd, orp)
 	{
 		// COLOR THE ORP LETTER RED
-		return wrd.substr(0, orp)+'<span style="color:'+initFPcolor+'">'+wrd.substr(orp,1)+"</span>"+wrd.substr(orp+1); 
+		return wrd.substr(0, orp)+'<span style="color:'+rr_init_fp_color+'">'+wrd.substr(orp,1)+"</span>"+wrd.substr(orp+1); 
 	} // rr_mark_orp()
 
 
