@@ -36,19 +36,29 @@ jQuery( document ).ready(function() {
 	 *
 	 ****************************************************************************************/
 	rr_play = function(postID) {
-		currentPostID = postID;
-		jQuery("#rr_btn_play"+currentPostID).hide();
-		jQuery("#rr_credits"+currentPostID).show();
-		jQuery("#rr_reading_pane"+currentPostID).show();
-		jQuery("#rr_btn_resume"+currentPostID).hide();
-		jQuery("#rr_playing_controls"+currentPostID).show();			
-		jQuery("#rr_delay"+currentPostID).show();
-		rr_show_speed();
-		// words = jQuery('#rr_content'+currentPostID).text().split(/\W+/);
-		words = eval("words"+currentPostID);
-		word_ptr = -1;
-		playing  = true;
-		rr_display_word();	
+		if(playing)
+			// OTTHER CONTROL PLAYING: CLOSE IT FAST AND QUEUE THIS ONE
+			rr_close(postID);
+		else
+		{
+			// READY TO PLAY
+			currentPostID = postID;
+			jQuery("#rr_btn_play"+currentPostID).hide();
+			jQuery("#rr_credits"+currentPostID).show();
+			jQuery("#rr_btn_resume"+currentPostID).hide();
+			jQuery("#rr_playing_controls"+currentPostID).show();			
+			jQuery("#rr_delay"+currentPostID).show();
+			rr_show_speed();
+			words = eval("words"+currentPostID);
+			jQuery("#rr_reading_pane"+currentPostID).fadeIn(1500,
+				function() {
+					// CALLED WHEN THE FADE IS DONE
+					playing = true;
+					word_ptr = -1;
+					rr_display_word();
+				}
+			);
+		}
 	} // rr_play()
 
 
@@ -57,13 +67,33 @@ jQuery( document ).ready(function() {
 	 *	STOP BUTTON PRESSED: STOP THE READER
 	 *
 	 ****************************************************************************************/	
-	rr_close = function() {
-		playing = false;
-		jQuery("#rr_btn_play"+currentPostID).show();
-		jQuery("#rr_credits"+currentPostID).hide();
-		jQuery("#rr_reading_pane"+currentPostID).hide();
-		jQuery("#rr_playing_controls"+currentPostID).hide();	
-		jQuery("#rr_delay"+currentPostID).hide();
+	rr_close = function(nextPostID) {
+		if(typeof nextPostID != 'undefined')
+		{	// QUICK CLOSE DOWN AND STARTING THE NEXT CLICKED CONTROL
+			playing  = false;
+			word_ptr = -1;
+			jQuery("#rr_reading_pane"+currentPostID).hide();
+			jQuery("#rr_btn_play"+currentPostID).show();
+			jQuery("#rr_credits"+currentPostID).hide();
+			jQuery("#rr_playing_controls"+currentPostID).hide();	
+			jQuery("#rr_delay"+currentPostID).hide();			
+			rr_play(nextPostID);
+		}
+		else
+		{	// FANCY CLOSE DOWN
+			jQuery("#rr_reading_pane"+currentPostID).fadeOut(2000, 
+				function() {
+					// CALLED WHEN THE FADE IS DONE
+					playing  = false;
+					word_ptr = -1;
+					jQuery("#rr_word"+currentPostID).html("");
+					jQuery("#rr_btn_play"+currentPostID).show();
+					jQuery("#rr_credits"+currentPostID).hide();
+					jQuery("#rr_playing_controls"+currentPostID).hide();	
+					jQuery("#rr_delay"+currentPostID).hide();
+				}
+			);
+		}
 	} // rr_close()
 
 
@@ -200,7 +230,7 @@ jQuery( document ).ready(function() {
 		// SET THE TIMER FOR THE NEXT WORD
 		if(word_ptr>=words.length-1)
 		    // LAST WORD: INCREASE THE DELAY
-			setTimeout(rr_display_word, 3000);
+			setTimeout(rr_display_word, 500);
 		else
 			setTimeout(rr_display_word, delay_ms);
 			

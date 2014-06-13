@@ -1,9 +1,9 @@
 <?php
-$rr_version      = '1.1.1';
-$rr_release_date = '06/11/2014';
+$rr_version      = '1.1.2';
+$rr_release_date = '06/13/2014';
 /**
  * @package Rocket Reader
- * @version 1.1.1
+ * @version 1.1.2
  */
  
 /*
@@ -11,7 +11,7 @@ Plugin Name: Rocket Reader
 Plugin URI: http://cagewebdev.com/rocket-reader/
 Description: Adds a control to read the text of posts and pages using a speed reading technique
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
-Version: 1.1.1
+Version: 1.1.2
 Author URI: http://cagewebdev.com
 */
 
@@ -176,8 +176,8 @@ function rr_add_control($content)
 	</div>
 	<div id="rr_button_container">
 		<div id="rr_btn_play'.get_the_ID().'" class="rr_btn_play">
-		  <button onclick="rr_play('.get_the_ID().');">Read with ROCKET READER!</button>
-		</div>
+			<button onclick="rr_play('.get_the_ID().');">Read with ROCKET READER!</button>
+		</div>	
 		<div id="rr_playing_controls'.get_the_ID().'" class="rr_playing_controls">	
 			<div id="rr_btn_close'.get_the_ID().'" class="rr_button">
 			  <button onclick="rr_close();" title="close">&times;</button>
@@ -216,7 +216,7 @@ function rr_add_control($content)
 *********************************************************************************************/
 function init_rocket_reader()
 {
-	global $rr_version;
+	global $rr_version, $rr_release_date;
 	
 	$initWPM = get_option("rr_wpm");
 	if(!$initWPM) $initWPM = 300;
@@ -234,7 +234,7 @@ function init_rocket_reader()
 	if(!$initFPcolor) $initFPcolor = "#FF0000";
 	
 	$output = '
-<!-- START Rocket Reader v' . $rr_version . ' [' . $rr_release_date . '] | http://cagewebdev.com/rocket-reader | Rolf van Gelder -->
+<!-- START Rocket Reader v' . $rr_version . ' [' . $rr_release_date . '] | http://cagewebdev.com/rocket-reader | CAGE Web Design | Rolf van Gelder -->
 <script type="text/javascript">
 var rr_init_WPM = '.$initWPM.';
 var rr_init_textcolor = "'.$initTextcolor.'";
