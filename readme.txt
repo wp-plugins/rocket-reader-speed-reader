@@ -8,8 +8,8 @@ Author URI: http://cagewebdev.com
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.0
 Tested up to: 3.9.1
-Stable tag: 1.1.2
-Version: 1.1.2
+Stable tag: 1.1.3
+Version: 1.1.3
 License: GPLv2 or later
 
 == Description ==
@@ -48,6 +48,9 @@ No warranty, use at own risk!
 * Change the settings (if needed) in the WP Admin Panel &raquo; Settings &raquo; Rocket Reader Opts
 
 == Changelog ==
+
+= 1.1.3 [06/22/2014] =
+* BUG FIX: Some special characters replaced
 
 = 1.1.2 [06/13/2014] =
 * BUG FIX: Bug fixed when trying to play more than one controls simultanuously

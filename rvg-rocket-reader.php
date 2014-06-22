@@ -1,9 +1,9 @@
 <?php
-$rr_version      = '1.1.2';
-$rr_release_date = '06/13/2014';
+$rr_version      = '1.1.3';
+$rr_release_date = '06/22/2014';
 /**
  * @package Rocket Reader
- * @version 1.1.2
+ * @version 1.1.3
  */
  
 /*
@@ -11,7 +11,7 @@ Plugin Name: Rocket Reader
 Plugin URI: http://cagewebdev.com/rocket-reader/
 Description: Adds a control to read the text of posts and pages using a speed reading technique
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
-Version: 1.1.2
+Version: 1.1.3
 Author URI: http://cagewebdev.com
 */
 
@@ -149,21 +149,28 @@ function rr_add_control($content)
 	global $rr_version;
 	
 	$c = strip_tags($content);
-	$c = str_replace("&#8217;", "xz", $c);
-	$c = str_replace("&#8220;", "xx", $c);
-	$c = str_replace("&#8243;", "yy", $c);
+	$c = str_replace("&nbsp;",  "",    $c);	// space
+	$c = str_replace("&#8211;", "xyx", $c);	// dash
+	$c = str_replace("&#8216;", "",    $c);	// single quote
+	$c = str_replace("&#8217;", "",    $c);	// single quote
+	$c = str_replace("&#8220;", "",    $c);	// double quote
+	$c = str_replace("&#8221;", "",    $c);	// double quote
+	$c = str_replace("&#8230;", "yxy", $c);	// ...
+	$c = str_replace("&#8243;", "",    $c);	// double quote
 
 	// SPLIT THE POST CONTENT INTO (UNICODE) WORDS AND FILL A JAVASCRIPT ARRAY WITH THEM
 	// (HAVE TO DO THIS BECAUSE JAVASCRIPT DOESN'T SUPPORT UNICODE REGEX YET...)
 	$return = '<script type="text/javascript">
 	var words'.get_the_ID().' = [';
-	preg_match_all("/[\p{L}\p{M}\{0-9}\{-|'|’|?|!}]+/u", $c, $result, PREG_PATTERN_ORDER);
+	preg_match_all("/[\p{L}\p{M}\{0-9}\{-|?|!|%}]+/u", $c, $result, PREG_PATTERN_ORDER);
 	for ($i = 0; $i < count($result[0]); $i++)
-	{	if($i) $return .= ',';
-		$w = $result[0][$i];
-		$w = str_replace("xz", "'", $w);
-		$w = str_replace("xx", '\"', $w);
-		$w = str_replace("yy", '\"', $w);
+	{	$w = $result[0][$i];
+		if($i) $return .= ',';
+		$w = str_replace("xyx", '-', $w);
+		$w = str_replace("yxy", "...", $w);
+		$w = str_replace("amp", "&", $w);
+		$w = str_replace("lt", "<", $w);
+		$w = str_replace("gt", ">", $w);
 		$return .= '"'.$w.'"';
 	}
 	$return .= ']</script>';
