@@ -1,9 +1,9 @@
 <?php
-$rr_version      = '1.1.3';
-$rr_release_date = '06/22/2014';
+$rr_version      = '1.1.4 (beta)';
+$rr_release_date = '06/23/2014';
 /**
  * @package Rocket Reader
- * @version 1.1.3
+ * @version 1.1.4
  */
  
 /*
@@ -11,7 +11,7 @@ Plugin Name: Rocket Reader
 Plugin URI: http://cagewebdev.com/rocket-reader/
 Description: Adds a control to read the text of posts and pages using a speed reading technique
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
-Version: 1.1.3
+Version: 1.1.4
 Author URI: http://cagewebdev.com
 */
 
@@ -146,9 +146,36 @@ function rr_load_scripts_styles()
 *********************************************************************************************/
 function rr_add_control($content)
 {
+	global $wpdb;
 	global $rr_version;
+
+	// v1.1.4 - Check if this post / page is disabled by a custom field ('disable_rocket_reader')
+	$sql = "
+	SELECT `meta_value`
+	FROM	$wpdb->postmeta
+	WHERE	`post_id`  = ".get_the_ID()."
+	AND		`meta_key` = 'disable_rocket_reader'
+	";
 	
-	$c = strip_tags($content);
+	$results = $wpdb -> get_results($sql);
+	if(isset($results[0]) && $results[0]->meta_value == "Y") return $content;
+
+	// v1.1.4 - Index the 'clean' content from the post, straight from the database
+	$sql = "
+	SELECT	`post_content`, `post_type`
+	FROM	$wpdb->posts
+	WHERE	`ID` = ".get_the_ID()."
+	";
+	
+	$results = $wpdb -> get_results($sql);
+	
+	$c = $results[0]->post_content;
+	$t = $results[0]->post_type;
+	
+	// v1.1.4 - Only add the control to pages and posts
+	if(!$c || ($t != 'page' && $t != 'post')) return $content;
+	
+	$c = strip_tags($c);
 	$c = str_replace("&nbsp;",  "",    $c);	// space
 	$c = str_replace("&#8211;", "xyx", $c);	// dash
 	$c = str_replace("&#8216;", "",    $c);	// single quote
@@ -210,7 +237,7 @@ function rr_add_control($content)
 	<br clear="all">	
 </div>
 <div id="rr_content'.get_the_ID().'">  
-  '.$content.'
+  '.$content.' 
 </div>';
 	return $return;
 } // rr_add_content()

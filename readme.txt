@@ -8,8 +8,8 @@ Author URI: http://cagewebdev.com
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.0
 Tested up to: 3.9.1
-Stable tag: 1.1.3
-Version: 1.1.3
+Stable tag: 1.1.4
+Version: 1.1.4
 License: GPLv2 or later
 
 == Description ==
@@ -49,6 +49,11 @@ No warranty, use at own risk!
 
 == Changelog ==
 
+= 1.1.4 [06/23/2014] =
+* NEW: Disable the Rocket Reader for a specific post / page with a custom field ('disable_rocket_reader')
+* BUG FIX: Get the content of the post straight from the database for indexing the words
+* BUG FIX: Skip post_types other than 'post' and 'page'
+
 = 1.1.3 [06/22/2014] =
 * BUG FIX: Some special characters replaced
 
@@ -69,3 +74,5 @@ No warranty, use at own risk!
 = How can I change the settings of this plugin? =
 * WP Admin Panel &raquo; Settings &raquo; Rocket Reader Opts
 
+= Can I disable the Rocket Reader for a specific post / page? =
+* Yes, you can! Add a custom field to that specific post / page named 'disable_rocket_reader' and give it the value "Y" (for YES).
