@@ -8,8 +8,8 @@ Author URI: http://cagewebdev.com
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.0
 Tested up to: 3.9.1
-Stable tag: 1.1.4
-Version: 1.1.4
+Stable tag: 1.2
+Version: 1.2
 License: GPLv2 or later
 
 == Description ==
@@ -32,7 +32,7 @@ You can find the settings page in the WP Admin Panel &raquo; Settings &raquo; Ro
 = Author =
 CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands - http://cagewebdev.com - http://cage.nl
 
-= Plugin URL =
+= Plugin URL + Demo =
 http://cagewebdev.com/rocket-reader
 
 = Download URL =
@@ -49,8 +49,14 @@ No warranty, use at own risk!
 
 == Changelog ==
 
+= 1.2 [06/24/2014] =
+* Some major improvements
+* CHANGE: Excerpts don't show the Reader anymore (useless for +/- 50 words...)
+* BUG FIX: Fixes a bug while displaying excerpts
+* BUG FIX: The vertical alignment of the word within the reading pane has been fixed
+
 = 1.1.4 [06/23/2014] =
-* NEW: Disable the Rocket Reader for a specific post / page with a custom field ('disable_rocket_reader')
+* NEW: Disable the reader for a specific post / page with a custom field ('disable_rocket_reader')
 * BUG FIX: Get the content of the post straight from the database for indexing the words
 * BUG FIX: Skip post_types other than 'post' and 'page'
 

@@ -1,6 +1,6 @@
 /********************************************************************************************
 
-	ROCKET READER JQUERY ENGINE
+	ROCKET READER JQUERY PLUGIN
 
 *********************************************************************************************/
 
@@ -216,9 +216,6 @@ jQuery( document ).ready(function() {
 			
 			// ADJUST THE LEFT POS OF THE DIV
 			jQuery("#rr_word"+currentPostID).css("left", leftpos+"px");
-			
-			var heightRP = (jQuery("#rr_reading_pane"+currentPostID).height()/2) - 32; // 12;
-			jQuery("#rr_word"+currentPostID).css("top", heightRP+"px");
 			
 			// SET THE TEXT COLOR, BASED ON THE OPTION IN THE DATABASE
 			jQuery("#rr_word"+currentPostID).css("color", rr_init_textcolor);
