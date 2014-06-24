@@ -11,11 +11,16 @@
 	display: none;
 	overflow: hidden;
 	height: 100px;
-	background-color: #EFEFEF;
 	border: solid 1px #999999;
 	margin-bottom: 10px;
 	font-family: "Courier New", Courier, monospace;
 	font-size: 36px;
+}
+/* v1.2 */
+.rr_word_wrapper {
+	display: table-cell;
+	height: 100px;
+	vertical-align: middle;
 }
 .rr_word {
 	display: inline-block;
@@ -35,7 +40,7 @@
 }
 .rr_button {
 	float: right;
-	margin-left: 5px;	
+	margin-left: 5px;
 }
 .rr_btn_play {
 	display: none;

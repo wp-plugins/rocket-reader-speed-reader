@@ -1,9 +1,9 @@
 <?php
-$rr_version      = '1.1.4 (beta)';
-$rr_release_date = '06/23/2014';
+$rr_version      = '1.2';
+$rr_release_date = '06/24/2014';
 /**
  * @package Rocket Reader
- * @version 1.1.4
+ * @version 1.2
  */
  
 /*
@@ -11,7 +11,7 @@ Plugin Name: Rocket Reader
 Plugin URI: http://cagewebdev.com/rocket-reader/
 Description: Adds a control to read the text of posts and pages using a speed reading technique
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
-Version: 1.1.4
+Version: 1.2
 Author URI: http://cagewebdev.com
 */
 
@@ -141,6 +141,42 @@ function rr_load_scripts_styles()
 
 /********************************************************************************************
 
+	GENERATE THE EXCERPT STRAIGHT FROM THE DATABASE (TO PREVENT THAT THE EXCERPT
+	BECOMES THE ROCKET READER INTRO TEXT)
+	
+	From v1.2
+
+*********************************************************************************************/
+function rr_the_excerpt($excerpt)
+{
+	// Post / page has an excerpt: use that
+	if(has_excerpt()) return $excerpt;	
+	
+	// Post / page has no excerpt: generate one
+	global $wpdb;
+
+	// v1.2 - Get the 'clean' content from the post, straight from the database
+	$sql = "
+	SELECT	`post_content`
+	FROM	$wpdb->posts
+	WHERE	`ID` = ".get_the_ID()."
+	";
+	
+	$results = $wpdb -> get_results($sql);
+	$text = $results[0]->post_content;
+
+	$text = strip_shortcodes( $text );
+	$text = str_replace(']]>', ']]&gt;', $text);
+	$excerpt_length = apply_filters( 'excerpt_length', 55 );
+	$excerpt_more   = apply_filters( 'excerpt_more', ' ' . '[&hellip;]' );
+	$text = wp_trim_words( $text, $excerpt_length, $excerpt_more );	
+	
+	return $text;
+} // rr_the_excerpt()
+
+
+/********************************************************************************************
+
 	ADD THE ROCKET READER CONTROL TO THE CONTENT
 
 *********************************************************************************************/
@@ -148,7 +184,7 @@ function rr_add_control($content)
 {
 	global $wpdb;
 	global $rr_version;
-
+	
 	// v1.1.4 - Check if this post / page is disabled by a custom field ('disable_rocket_reader')
 	$sql = "
 	SELECT `meta_value`
@@ -187,7 +223,7 @@ function rr_add_control($content)
 
 	// SPLIT THE POST CONTENT INTO (UNICODE) WORDS AND FILL A JAVASCRIPT ARRAY WITH THEM
 	// (HAVE TO DO THIS BECAUSE JAVASCRIPT DOESN'T SUPPORT UNICODE REGEX YET...)
-	$return = '<script type="text/javascript">
+	$return = $ex.'<script type="text/javascript">
 	var words'.get_the_ID().' = [';
 	preg_match_all("/[\p{L}\p{M}\{0-9}\{-|?|!|%}]+/u", $c, $result, PREG_PATTERN_ORDER);
 	for ($i = 0; $i < count($result[0]); $i++)
@@ -206,7 +242,9 @@ function rr_add_control($content)
 <div id="rr_wrapper'.get_the_ID().'" class="rr_wrapper">
 	<div id="rr_credits'.get_the_ID().'" class="rr_credits">Rocket Reader v'.$rr_version.', a plugin by Rolf van Gelder (<a href="http://cagewebdev.com/rocket-reader/" target="_blank">http://cagewebdev.com/rocket-reader/</a>)</div>
 	<div id="rr_reading_pane'.get_the_ID().'" class="rr_reading_pane">
-		<div id="rr_word'.get_the_ID().'" class="rr_word"></div>
+	    <div id="rr_word_wrapper'.get_the_ID().'" class="rr_word_wrapper">
+			<div id="rr_word'.get_the_ID().'" class="rr_word"></div>
+		</div>
 	</div>
 	<div id="rr_button_container">
 		<div id="rr_btn_play'.get_the_ID().'" class="rr_btn_play">
@@ -284,6 +322,8 @@ var rr_init_fp_color = "'.$initFPcolor.'";
 }
 
 add_action('wp_enqueue_scripts','rr_load_scripts_styles');
-add_filter('the_content', 'rr_add_control' );
 add_action('wp_head','init_rocket_reader');
+add_filter('the_content', 'rr_add_control' );
+// v1.2
+add_filter('the_excerpt', 'rr_the_excerpt');
 ?>
