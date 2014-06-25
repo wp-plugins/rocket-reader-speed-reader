@@ -15,6 +15,48 @@ jQuery( document ).ready(function() {
 	var currentPostID = 0;
 	var letter_width  = 20;
 
+	// PUSH IN THE ROCKET READER HTML
+	jQuery(".rr_wrapper").each(function() {
+		var postid = jQuery(this).attr("postid");
+		var rrhtml = '';
+		
+		rrhtml += '<div id="rr_credits'+postid+'" class="rr_credits">Rocket Reader v'+rr_init_version+', a plugin by Rolf van Gelder (<a href="http://cagewebdev.com/rocket-reader/" target="_blank">http://cagewebdev.com/rocket-reader/</a>)</div>';
+		rrhtml += '<div id="rr_reading_pane'+postid+'" class="rr_reading_pane">';
+		rrhtml += '  <div id="rr_word_wrapper'+postid+'" class="rr_word_wrapper">';
+		rrhtml += '    <div id="rr_word'+postid+'" class="rr_word"></div>';
+		rrhtml += '  </div>';
+		rrhtml += '</div>';
+		rrhtml += '<div id="rr_button_container'+postid+'">';
+		rrhtml += '  <div id="rr_btn_play'+postid+'" class="rr_btn_play">';
+		rrhtml += '    <button onclick="rr_play('+postid+');" title="Read this article with the Rocket Reader!">ROCKET READER</button>';
+		rrhtml += '  </div>';
+		rrhtml += '  <div id="rr_playing_controls'+postid+'" class="rr_playing_controls">';
+		rrhtml += '    <div id="rr_btn_close'+postid+'" class="rr_button">';
+        rrhtml += '      <button onclick="rr_close();" title="close">&times;</button>';
+		rrhtml += '    </div>';
+		rrhtml += '    <div id="rr_btn_pause'+postid+'" class="rr_button">';
+        rrhtml += '      <button onclick="rr_pause();" title="pause">||</button>';
+      	rrhtml += '    </div>';
+      	rrhtml += '    <div id="rr_btn_resume'+postid+'" class="rr_button">';
+        rrhtml += '      <button onclick="rr_resume('+postid+');" title="resume">&gt;</button>';
+      	rrhtml += '    </div>';
+      	rrhtml += '    <div id="rr_btn_plus'+postid+'" class="rr_button">';
+        rrhtml += '      <button onclick="rr_plus();" title="increase speed">+</button>';
+      	rrhtml += '    </div>';
+      	rrhtml += '    <div id="rr_btn_minus'+postid+'" class="rr_button">';
+        rrhtml += '      <button onclick="rr_minus();" title="decrease speed">-</button>';
+      	rrhtml += '    </div>';
+      	rrhtml += '    <div id="rr_btn_bold'+postid+'" class="rr_button">';
+        rrhtml += '      <button onclick="rr_font_weight();" title="bold on/off">b</button>';
+      	rrhtml += '    </div>';
+		rrhtml += '  </div><!-- rr_playing_controls -->';
+  		rrhtml += '</div><!-- rr_button_container -->';
+  		rrhtml += '<div id="rr_delay'+postid+'"></div>';
+  		rrhtml += '<br clear="all">';
+		
+		jQuery(this).html(rrhtml);
+	});
+
 	// VALUE FROM THE COOKIE OVERRIDES THE DEFAULT VALUE
 	var tmp = getCookie("rr_wpm");
 	if(typeof tmp != "undefined" && tmp != '' && tmp != 'NaN') wpm = parseInt(tmp);
@@ -28,7 +70,7 @@ jQuery( document ).ready(function() {
 
 	// DISPLAY PLAY BUTTONS WHEN PAGE IS FULLY LOADED
 	jQuery(".rr_btn_play").show();
-
+	
 
 	/****************************************************************************************
 	 *
@@ -158,8 +200,8 @@ jQuery( document ).ready(function() {
 	rr_font_weight = function() {
 		var fw = jQuery(".rr_reading_pane").css("font-weight");
 		if(fw == 400) fw = 700; else fw = 400;
-		jQuery(".rr_reading_pane").css("font-weight", fw);
 		document.cookie="rr_font_weight="+fw+"; expires=Thu, 5 Dec 2999 12:00:00 GMT; path=/";
+		jQuery(".rr_reading_pane").css("font-weight", fw);
 	} // rr_font_weight()
 	
 
@@ -255,7 +297,8 @@ jQuery( document ).ready(function() {
 	{
 		// FIND THE FIRST VOWEL TO THE LEFT
 		for(i=orp; i>=0; i--) if (/[aeiou]/i.test(wrd[i])) return i;
-		// NO VOWELS FOUND TO THE LEFT OF THE CENTER; USE ORIGINAL ORP (= CENTER POINT)
+		
+		// NO VOWELS FOUND TO THE LEFT OF THE CENTER; USE ORIGINAL ORP (= LEFT CENTER POINT)
 		return orp;
 	} // rr_find_vowel()
 });
