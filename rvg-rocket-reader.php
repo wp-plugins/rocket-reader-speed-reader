@@ -1,9 +1,9 @@
 <?php
-$rr_version      = '1.2';
-$rr_release_date = '06/24/2014';
+$rr_version      = '1.2.1';
+$rr_release_date = '06/25/2014';
 /**
  * @package Rocket Reader
- * @version 1.2
+ * @version 1.2.1
  */
  
 /*
@@ -11,7 +11,7 @@ Plugin Name: Rocket Reader
 Plugin URI: http://cagewebdev.com/rocket-reader/
 Description: Adds a control to read the text of posts and pages using a speed reading technique
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
-Version: 1.2
+Version: 1.2.1
 Author URI: http://cagewebdev.com
 */
 
@@ -141,42 +141,6 @@ function rr_load_scripts_styles()
 
 /********************************************************************************************
 
-	GENERATE THE EXCERPT STRAIGHT FROM THE DATABASE (TO PREVENT THAT THE EXCERPT
-	BECOMES THE ROCKET READER INTRO TEXT)
-	
-	From v1.2
-
-*********************************************************************************************/
-function rr_the_excerpt($excerpt)
-{
-	// Post / page has an excerpt: use that
-	if(has_excerpt()) return $excerpt;	
-	
-	// Post / page has no excerpt: generate one
-	global $wpdb;
-
-	// v1.2 - Get the 'clean' content from the post, straight from the database
-	$sql = "
-	SELECT	`post_content`
-	FROM	$wpdb->posts
-	WHERE	`ID` = ".get_the_ID()."
-	";
-	
-	$results = $wpdb -> get_results($sql);
-	$text = $results[0]->post_content;
-
-	$text = strip_shortcodes( $text );
-	$text = str_replace(']]>', ']]&gt;', $text);
-	$excerpt_length = apply_filters( 'excerpt_length', 55 );
-	$excerpt_more   = apply_filters( 'excerpt_more', ' ' . '[&hellip;]' );
-	$text = wp_trim_words( $text, $excerpt_length, $excerpt_more );	
-	
-	return $text;
-} // rr_the_excerpt()
-
-
-/********************************************************************************************
-
 	ADD THE ROCKET READER CONTROL TO THE CONTENT
 
 *********************************************************************************************/
@@ -238,45 +202,12 @@ function rr_add_control($content)
 	}
 	$return .= ']</script>';
 
+	// v1.2.1
 	$return .= '
-<div id="rr_wrapper'.get_the_ID().'" class="rr_wrapper">
-	<div id="rr_credits'.get_the_ID().'" class="rr_credits">Rocket Reader v'.$rr_version.', a plugin by Rolf van Gelder (<a href="http://cagewebdev.com/rocket-reader/" target="_blank">http://cagewebdev.com/rocket-reader/</a>)</div>
-	<div id="rr_reading_pane'.get_the_ID().'" class="rr_reading_pane">
-	    <div id="rr_word_wrapper'.get_the_ID().'" class="rr_word_wrapper">
-			<div id="rr_word'.get_the_ID().'" class="rr_word"></div>
-		</div>
-	</div>
-	<div id="rr_button_container">
-		<div id="rr_btn_play'.get_the_ID().'" class="rr_btn_play">
-			<button onclick="rr_play('.get_the_ID().');">Read with ROCKET READER!</button>
-		</div>	
-		<div id="rr_playing_controls'.get_the_ID().'" class="rr_playing_controls">	
-			<div id="rr_btn_close'.get_the_ID().'" class="rr_button">
-			  <button onclick="rr_close();" title="close">&times;</button>
-			</div>
-			<div id="rr_btn_pause'.get_the_ID().'" class="rr_button">
-			  <button onclick="rr_pause();" title="pause">||</button>
-			</div>
-			<div id="rr_btn_resume'.get_the_ID().'" class="rr_button">
-			  <button onclick="rr_resume('.get_the_ID().');" title="resume">&gt;</button>
-			</div>
-			<div id="rr_btn_plus'.get_the_ID().'" class="rr_button">
-			  <button onclick="rr_plus();" title="increase speed">+</button>
-			</div>
-			<div id="rr_btn_minus'.get_the_ID().'" class="rr_button">
-			  <button onclick="rr_minus();" title="decrease speed">-</button>
-			</div>
-			<div id="rr_btn_bold'.get_the_ID().'" class="rr_button">
-			  <button onclick="rr_font_weight();" title="bold on/off">b</button>
-			</div>			
-		</div>	
-	</div>
-	<div id="rr_delay'.get_the_ID().'"></div>
-	<br clear="all">	
+<div id="rr_wrapper'.get_the_ID().'" class="rr_wrapper" postid="'.get_the_ID().'">
 </div>
-<div id="rr_content'.get_the_ID().'">  
-  '.$content.' 
-</div>';
+<!-- rr_wrapper -->
+<div id="rr_content'.get_the_ID().'"> '.$content.' </div>';
 	return $return;
 } // rr_add_content()
 
@@ -308,6 +239,7 @@ function init_rocket_reader()
 	$output = '
 <!-- START Rocket Reader v' . $rr_version . ' [' . $rr_release_date . '] | http://cagewebdev.com/rocket-reader | CAGE Web Design | Rolf van Gelder -->
 <script type="text/javascript">
+var rr_init_version = "'.$rr_version.'";
 var rr_init_WPM = '.$initWPM.';
 var rr_init_textcolor = "'.$initTextcolor.'";
 var rr_init_bgcolor = "'.$initBgcolor.'";
@@ -324,6 +256,4 @@ var rr_init_fp_color = "'.$initFPcolor.'";
 add_action('wp_enqueue_scripts','rr_load_scripts_styles');
 add_action('wp_head','init_rocket_reader');
 add_filter('the_content', 'rr_add_control' );
-// v1.2
-add_filter('the_excerpt', 'rr_the_excerpt');
 ?>

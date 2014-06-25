@@ -3,13 +3,13 @@ Contributors: CAGE Web Design | Rolf van Gelder
 Donate link: http://cagewebdev.com
 Plugin Name: Rocket Reader (Speed-Reader)
 Plugin URI: http://cagewebdev.com/rocket-reader
-Tags: speed reader, speed reading, speed, reader, reading, post, posts, page, pages, faster reading
+Tags: speed reader, speed-reader, speed reading, speed, reader, reading, post, posts, page, pages, faster reading
 Author URI: http://cagewebdev.com
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.0
 Tested up to: 3.9.1
-Stable tag: 1.2
-Version: 1.2
+Stable tag: 1.2.1
+Version: 1.2.1
 License: GPLv2 or later
 
 == Description ==
@@ -32,14 +32,14 @@ You can find the settings page in the WP Admin Panel &raquo; Settings &raquo; Ro
 = Author =
 CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands - http://cagewebdev.com - http://cage.nl
 
-= Plugin URL + Demo =
-http://cagewebdev.com/rocket-reader
+= Plugin URL + Live Demo =
+http://cagewebdev.com/rocket-reader/
 
 = Download URL =
 http://wordpress.org/plugins/rocket-reader/
 
 = Disclaimer =
-No warranty, use at own risk!
+NO WARRANTY, USE AT OWN RISK!
 
 == Installation ==
 
@@ -48,6 +48,9 @@ No warranty, use at own risk!
 * Change the settings (if needed) in the WP Admin Panel &raquo; Settings &raquo; Rocket Reader Opts
 
 == Changelog ==
+
+= 1.2.1 [06/25/2014] =
+* CHANGE: The Rocket Reader HTML is added dynamically after the page is loaded; makes it more theme independant.
 
 = 1.2 [06/24/2014] =
 * Some major improvements
@@ -81,4 +84,5 @@ No warranty, use at own risk!
 * WP Admin Panel &raquo; Settings &raquo; Rocket Reader Opts
 
 = Can I disable the Rocket Reader for a specific post / page? =
-* Yes, you can! Add a custom field to that specific post / page named 'disable_rocket_reader' and give it the value "Y" (for YES).
+* Yes, you can! Add a custom field to that specific post / page named 'disable_rocket_reader' and give it the value "Y" (for YES). See http://cagewebdev.com/rocket-reader/ for more info.
+
