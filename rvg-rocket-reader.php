@@ -1,9 +1,9 @@
 <?php
-$rr_version      = '1.2.1';
-$rr_release_date = '06/25/2014';
+$rr_version      = '1.2.2';
+$rr_release_date = '07/08/2014';
 /**
  * @package Rocket Reader
- * @version 1.2.1
+ * @version 1.2.2
  */
  
 /*
@@ -11,7 +11,7 @@ Plugin Name: Rocket Reader
 Plugin URI: http://cagewebdev.com/rocket-reader/
 Description: Adds a control to read the text of posts and pages using a speed reading technique
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
-Version: 1.2.1
+Version: 1.2.2
 Author URI: http://cagewebdev.com
 */
 
@@ -52,6 +52,37 @@ function rr_options_page()
 		update_option('rr_bordercolor', $_REQUEST['rr_bordercolor']);		
 		update_option('rr_fpc', $_REQUEST['rr_fpc']);
 		echo "<div class='updated'><p><strong>Rocket Reader OPTIONS UPDATED!</strong>";
+	}
+	else if (isset($_POST['action']) && ($_POST['action']=='show_all' || $_POST['action']=='hide_all'))
+	{
+		// FROM v1.2.2
+		$sql = "
+		SELECT `ID`
+		FROM $wpdb->posts
+		WHERE (`post_type` = 'page' OR `post_type` = 'post')
+		AND `post_status` = 'publish'
+		";
+		$results = $wpdb -> get_results($sql);
+		for ($i=0; $i<count($results); $i++)
+		{
+			// DELETE DEPRECIATED SETTING (from v1.2.2)
+			delete_post_meta($results[$i]->ID, 'disable_rocket_reader');
+			if($_POST['action']=='show_all')
+			{	update_post_meta($results[$i]->ID, 'enable_rocket_reader', 'Y');
+			}
+			else
+			{	delete_post_meta($results[$i]->ID, 'enable_rocket_reader');
+			}
+		}
+		if($_POST['action']=='show_all')
+			$msg = 'The Rocket Reader has been ADDED to ALL posts and pages';
+		else
+			$msg = 'The Rocket Reader has been DELETED from ALL posts and pages';
+?>
+<script type="text/javascript">
+alert('<?php echo $msg;?>');
+</script>
+<?php
 	}
 
 	$rr_wpm = get_option('rr_wpm');
@@ -121,6 +152,28 @@ function rr_options_page()
     <input name="btn_save" type="submit" value="save options" class="button-primary button-large" />
     <input name="btn_cancel" type="button" value="cancel" class="button" onclick="history.go(-1);" />
   </form>
+  <br />
+  <hr />
+  <br />
+<?php
+	// FROM v1.2.2
+?>
+  <strong>A quick way to ADD or DELETE the Rocket Reader to / from ALL posts / pages:</strong><br />
+  (To show the Rocket Reader on a specific post / page: add a custom field named <strong>enable_rocket_reader</strong> and give it the value <strong>Y</strong>)<br />
+  <br />
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><form action="" method="post" name="show_all_form">
+          <input name="action" type="hidden" value="show_all" />
+          <input name="btn_save_sa" type="submit" value="ADD TO ALL" class="button-primary button-large" />
+        </form></td>
+      <td>&nbsp;&nbsp;&nbsp;</td>
+      <td><form action="" method="post" name="hide_all_form">
+          <input name="action" type="hidden" value="hide_all" />
+          <input name="btn_save_ha" type="submit" value="DELETE FROM ALL" class="button-primary button-large" />
+        </form></td>
+    </tr>
+  </table>
 </div>
 <?php
 } // rr_options_page()
@@ -148,17 +201,17 @@ function rr_add_control($content)
 {
 	global $wpdb;
 	global $rr_version;
-	
+
 	// v1.1.4 - Check if this post / page is disabled by a custom field ('disable_rocket_reader')
 	$sql = "
 	SELECT `meta_value`
 	FROM	$wpdb->postmeta
 	WHERE	`post_id`  = ".get_the_ID()."
-	AND		`meta_key` = 'disable_rocket_reader'
+	AND		`meta_key` = 'enable_rocket_reader'
 	";
-	
+
 	$results = $wpdb -> get_results($sql);
-	if(isset($results[0]) && $results[0]->meta_value == "Y") return $content;
+	if(!isset($results[0]) || $results[0]->meta_value != "Y") return $content;
 
 	// v1.1.4 - Index the 'clean' content from the post, straight from the database
 	$sql = "

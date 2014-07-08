@@ -8,8 +8,8 @@ Author URI: http://cagewebdev.com
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.0
 Tested up to: 3.9.1
-Stable tag: 1.2.1
-Version: 1.2.1
+Stable tag: 1.2.2
+Version: 1.2.2
 License: GPLv2 or later
 
 == Description ==
@@ -49,6 +49,11 @@ NO WARRANTY, USE AT OWN RISK!
 
 == Changelog ==
 
+= 1.2.2 [07/08/2014] =
+* NEW: Two new buttons for quickly adding / deleting the Rocket Reader to / from ALL posts and pages
+* CHANGE: Per DEFAULT the Rocket Reader is NOT SHOW now on a post or page!
+* CHANGE: The custom field 'disable_rocket_reader' has been replaced by the custom field 'enable_rocket_reader'
+
 = 1.2.1 [06/25/2014] =
 * CHANGE: The Rocket Reader HTML is added dynamically after the page is loaded; makes it more theme independant.
 
@@ -83,6 +88,7 @@ NO WARRANTY, USE AT OWN RISK!
 = How can I change the settings of this plugin? =
 * WP Admin Panel &raquo; Settings &raquo; Rocket Reader Opts
 
-= Can I disable the Rocket Reader for a specific post / page? =
-* Yes, you can! Add a custom field to that specific post / page named 'disable_rocket_reader' and give it the value "Y" (for YES). See http://cagewebdev.com/rocket-reader/ for more info.
+= How can I enable the Rocket Reader for a specific post / page? =
+* Add a custom field to that specific post / page named 'enable_rocket_reader' and give it the value 'Y' (for YES).
+See http://cagewebdev.com/rocket-reader/ for more info.
 
