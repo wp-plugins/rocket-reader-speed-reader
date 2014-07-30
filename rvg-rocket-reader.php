@@ -1,9 +1,9 @@
 <?php
-$rr_version      = '1.2.2';
-$rr_release_date = '07/08/2014';
+$rr_version      = '1.2.3';
+$rr_release_date = '07/30/2014';
 /**
  * @package Rocket Reader
- * @version 1.2.2
+ * @version 1.2.3
  */
  
 /*
@@ -11,7 +11,7 @@ Plugin Name: Rocket Reader
 Plugin URI: http://cagewebdev.com/rocket-reader/
 Description: Adds a control to read the text of posts and pages using a speed reading technique
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
-Version: 1.2.2
+Version: 1.2.3
 Author URI: http://cagewebdev.com
 */
 
