@@ -5,49 +5,80 @@
 *********************************************************************************************/
 
 // WPM FROM OPTIONS (WPM)
-var wpm      = rr_init_WPM;
-var delay_ms = parseInt(60000 / wpm);	// DELAY BETWEEN WORDS (MILLISECONDS)
+var wpm           = rr_init_WPM;
+var delay_ms      = parseInt(60000 / wpm);	// DELAY BETWEEN WORDS (MILLISECONDS)
+var playing       = false;
+var words;
+var word_ptr      = -1;
+var currentPostID = 0;
+var use_popup     = rr_init_use_popup;
 
 jQuery( document ).ready(function() {
-	var words;
-	var word_ptr      = -1;
-	var playing       = false;
-	var currentPostID = 0;
 	var letter_width  = 20;
-
+	
 	// PUSH IN THE ROCKET READER HTML
-	jQuery(".rr_wrapper").each(function() {
+	jQuery(".rr_wrapper, .rr_wrapper_popup").each(function() {
 		var postid = jQuery(this).attr("postid");
 		var rrhtml = '';
-		
-		rrhtml += '<div id="rr_credits'+postid+'" class="rr_credits">Rocket Reader v'+rr_init_version+', a plugin by Rolf van Gelder (<a href="http://cagewebdev.com/rocket-reader/" target="_blank">http://cagewebdev.com/rocket-reader/</a>)</div>';
+	
+		rrhtml += '<div id="rr_credits'+postid+'" class="rr_credits">Rocket Reader v'+rr_init_version+', by <a href="http://rvg.cage.nl/" target="_blank">Rolf van Gelder</a>, CAGE Web Design (<a href="http://cagewebdev.com/rocket-reader/" target="_blank">http://cagewebdev.com/rocket-reader/</a>)</div>';
 		rrhtml += '<div id="rr_reading_pane'+postid+'" class="rr_reading_pane">';
 		rrhtml += '  <div id="rr_word_wrapper'+postid+'" class="rr_word_wrapper">';
 		rrhtml += '    <div id="rr_word'+postid+'" class="rr_word"></div>';
 		rrhtml += '  </div>';
 		rrhtml += '</div>';
 		rrhtml += '<div id="rr_button_container'+postid+'">';
-		rrhtml += '  <div id="rr_btn_play'+postid+'" class="rr_btn_play">';
-		rrhtml += '    <button onclick="rr_play('+postid+');" title="Read this article with the Rocket Reader!">ROCKET READER</button>';
-		rrhtml += '  </div>';
+
+		if(use_popup == 'Y')
+		{
+			rrhtml += '<script type="text/javascript">';
+			rrhtml += 'jQuery(function() {';
+			rrhtml += '	jQuery("#rr_wrapper'+postid+'").dialog({';
+			rrhtml += '		autoOpen: false,';
+			rrhtml += '     modal: true,';
+			// HIDE CLOSE BUTTON
+			rrhtml += '		dialogClass: "dlg-no-close",';
+			// DISABLE ESC BUTTON
+			rrhtml += '     closeOnEscape: false';
+			rrhtml += '	});';
+			
+			rrhtml += 'jQuery("#rr_btn_play'+postid+'").on("click", function() {';
+			rrhtml += '		jQuery("#rr_wrapper'+postid+'").dialog("open");';
+			// ADJUST THE DYNAMIC POSITION
+			rrhtml += '     jQuery("#rr_wrapper'+postid+'").css("margin-left","-"+(jQuery("#rr_wrapper'+postid+'").width()/2)+"px");';
+			rrhtml += '     jQuery("#rr_wrapper'+postid+'").css("margin-top","-"+(jQuery("#rr_wrapper'+postid+'").height()/2)+"px");';		
+	
+			rrhtml += '     jQuery("#rr_wrapper'+postid+'").show();';
+			rrhtml += '     rr_play("'+postid+'");';
+			rrhtml += '	});';
+			rrhtml += '});';
+			rrhtml += '</script>';
+		}
+		else
+		{
+			rrhtml += '<div id="rr_btn_play'+postid+'" class="rr_btn_play">';
+			rrhtml += '  <button onclick="rr_play('+postid+');" title="'+rr_read_with_reader+'">ROCKET READER</button>';
+			rrhtml += '</div>';			
+		}
+		
 		rrhtml += '  <div id="rr_playing_controls'+postid+'" class="rr_playing_controls">';
 		rrhtml += '    <div id="rr_btn_close'+postid+'" class="rr_button">';
-        rrhtml += '      <button onclick="rr_close();" title="close">&times;</button>';
+        rrhtml += '      <button onclick="rr_close();" title="'+rr_close+'">&times;</button>';
 		rrhtml += '    </div>';
 		rrhtml += '    <div id="rr_btn_pause'+postid+'" class="rr_button">';
-        rrhtml += '      <button onclick="rr_pause();" title="pause">||</button>';
+        rrhtml += '      <button onclick="rr_pause();" title="'+rr_pause+'">||</button>';
       	rrhtml += '    </div>';
-      	rrhtml += '    <div id="rr_btn_resume'+postid+'" class="rr_button">';
-        rrhtml += '      <button onclick="rr_resume('+postid+');" title="resume">&gt;</button>';
+		rrhtml += '    <div id="rr_btn_resume'+postid+'" class="rr_button">';
+        rrhtml += '      <button onclick="rr_resume('+postid+');" title="'+rr_resume+'">&gt;</button>';
       	rrhtml += '    </div>';
-      	rrhtml += '    <div id="rr_btn_plus'+postid+'" class="rr_button">';
-        rrhtml += '      <button onclick="rr_plus();" title="increase speed">+</button>';
+		rrhtml += '    <div id="rr_btn_plus'+postid+'" class="rr_button">';
+        rrhtml += '      <button onclick="rr_plus();" title="'+rr_increase_speed+'">+</button>';
       	rrhtml += '    </div>';
-      	rrhtml += '    <div id="rr_btn_minus'+postid+'" class="rr_button">';
-        rrhtml += '      <button onclick="rr_minus();" title="decrease speed">-</button>';
+		rrhtml += '    <div id="rr_btn_minus'+postid+'" class="rr_button">';
+        rrhtml += '      <button onclick="rr_minus();" title="'+rr_decrease_speed+'">-</button>';
       	rrhtml += '    </div>';
       	rrhtml += '    <div id="rr_btn_bold'+postid+'" class="rr_button">';
-        rrhtml += '      <button onclick="rr_font_weight();" title="bold on/off">b</button>';
+        rrhtml += '      <button onclick="rr_font_weight();" title="'+rr_bold_on_off+'">b</button>';
       	rrhtml += '    </div>';
 		rrhtml += '  </div><!-- rr_playing_controls -->';
   		rrhtml += '</div><!-- rr_button_container -->';
@@ -85,11 +116,16 @@ jQuery( document ).ready(function() {
 		{
 			// READY TO PLAY
 			currentPostID = postID;
-			jQuery("#rr_btn_play"+currentPostID).hide();
+			if(use_popup == 'N')
+			{	jQuery("#rr_btn_play"+currentPostID).hide();
+				jQuery("#rr_wrapper"+currentPostID).css("height","155px");
+			}
 			jQuery("#rr_credits"+currentPostID).show();
 			jQuery("#rr_btn_resume"+currentPostID).hide();
 			jQuery("#rr_playing_controls"+currentPostID).show();			
 			jQuery("#rr_delay"+currentPostID).show();
+			jQuery("#rr_wrapper"+currentPostID).css("background-color", rr_init_cont_bgcolor);
+			jQuery("#rr_wrapper"+currentPostID).css("border", "solid 1px "+rr_init_cont_bordercolor);		
 			rr_show_speed();
 			words = eval("words"+currentPostID);
 			jQuery("#rr_reading_pane"+currentPostID).fadeIn(1500,
@@ -109,34 +145,47 @@ jQuery( document ).ready(function() {
 	 *	STOP BUTTON PRESSED: STOP THE READER
 	 *
 	 ****************************************************************************************/	
-	rr_close = function(nextPostID) {
-		if(typeof nextPostID != 'undefined')
+	rr_close = function(nextPostID, fadeTime) {
+		if(typeof nextPostID != 'undefined' && nextPostID != null)
 		{	// QUICK CLOSE DOWN AND STARTING THE NEXT CLICKED CONTROL
-			playing  = false;
-			word_ptr = -1;
-			jQuery("#rr_reading_pane"+currentPostID).hide();
-			jQuery("#rr_btn_play"+currentPostID).show();
-			jQuery("#rr_credits"+currentPostID).hide();
-			jQuery("#rr_playing_controls"+currentPostID).hide();	
-			jQuery("#rr_delay"+currentPostID).hide();			
-			rr_play(nextPostID);
+			rr_final_close(nextPostID);
 		}
 		else
 		{	// FANCY CLOSE DOWN
-			jQuery("#rr_reading_pane"+currentPostID).fadeOut(2000, 
+			jQuery("#rr_wrapper"+currentPostID).fadeOut(fadeTime, 
 				function() {
 					// CALLED WHEN THE FADE IS DONE
-					playing  = false;
-					word_ptr = -1;
-					jQuery("#rr_word"+currentPostID).html("");
-					jQuery("#rr_btn_play"+currentPostID).show();
-					jQuery("#rr_credits"+currentPostID).hide();
-					jQuery("#rr_playing_controls"+currentPostID).hide();	
-					jQuery("#rr_delay"+currentPostID).hide();
+					rr_final_close(nextPostID);;
 				}
 			);
 		}
 	} // rr_close()
+
+
+	/****************************************************************************************
+	 *
+	 *	CLOSE THE READER (AFTER DELAY)
+	 *
+	 ****************************************************************************************/
+	rr_final_close = function(nextPostID) {
+		playing  = false;
+		word_ptr = -1;
+		jQuery("#rr_word"+currentPostID).html("");
+		if(use_popup=='Y')
+			jQuery("#rr_wrapper"+currentPostID).hide();
+		else
+		{	jQuery("#rr_wrapper"+currentPostID).css("height","");
+			jQuery("#rr_wrapper"+currentPostID).show();
+			jQuery("#rr_btn_play"+currentPostID).show();
+		}
+		jQuery("#rr_credits"+currentPostID).hide();
+		jQuery("#rr_playing_controls"+currentPostID).hide();	
+		jQuery("#rr_delay"+currentPostID).hide();
+		jQuery("#rr_reading_pane"+currentPostID).hide();
+		jQuery("#rr_wrapper"+currentPostID).css("background-color","");
+		jQuery("#rr_wrapper"+currentPostID).css("border","");
+		if(typeof nextPostID != 'undefined' && nextPostID != null) rr_play(nextPostID);		
+	} // rr_final_close()
 
 
 	/****************************************************************************************
@@ -212,7 +261,7 @@ jQuery( document ).ready(function() {
 	 ****************************************************************************************/		
 	rr_show_speed = function()
 	{
-		jQuery("#rr_delay"+currentPostID).html("speed: <strong>"+wpm+"</strong> words / minute");
+		jQuery("#rr_delay"+currentPostID).html(""+rr_speed+": <strong>"+wpm+"</strong> "+rr_words+" / "+rr_minute);
 	} // rr_show_speed
 
 
@@ -224,11 +273,12 @@ jQuery( document ).ready(function() {
 	rr_display_word = function() {
 		
 		if(!playing) return;
-		
+
 		if(word_ptr++>=words.length-1)
 		{	// LAST WORD DISPLAYED
 			playing = false;
-			rr_close();
+			// CLOSE READER (2000 = FADING TIME IN MS)
+			rr_close(null, 2000);
 			return;
 		}
 		

@@ -6,10 +6,10 @@ Plugin URI: http://cagewebdev.com/rocket-reader
 Tags: speed reader, speed-reader, speed reading, speed, reader, reading, post, posts, page, pages, faster reading
 Author URI: http://cagewebdev.com
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
-Requires at least: 2.0
-Tested up to: 3.9.1
-Stable tag: 1.2.3
-Version: 1.2.3
+Requires at least: 2.8
+Tested up to: 4.0
+Stable tag: 1.3
+Version: 1.3
 License: GPLv2 or later
 
 == Description ==
@@ -30,13 +30,23 @@ So by highlighting that focal point it makes reading even way faster!
 You can find the settings page in the WP Admin Panel &raquo; Settings &raquo; Rocket Reader Opts.
 
 = Author =
-CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands - http://cagewebdev.com - http://cage.nl
+CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands - http://cagewebdev.com - http://rvg.cage.nl
 
 = Plugin URL + Live Demo =
 http://cagewebdev.com/rocket-reader/
 
 = Download URL =
 http://wordpress.org/plugins/rocket-reader/
+
+= Currently supported languages =
+* English [en_US] (default language, by Rolf van Gelder, CAGE Web Design - http://cagewebdev.com)
+* Dutch   [nl_NL] (translated by Rolf van Gelder, CAGE Web Design - http://cagewebdev.com)
+
+= Other WordPress plugins by Rolf van Gelder =
+<em>Optimize Database after Deleting Revisions</em><br />
+http://wordpress.org/plugins/order-your-posts-manually/<br />
+<em>Order Your Posts Manually</em><br />
+http://wordpress.org/plugins/order-your-posts-manually/
 
 = Disclaimer =
 NO WARRANTY, USE AT OWN RISK!
@@ -48,6 +58,12 @@ NO WARRANTY, USE AT OWN RISK!
 * Change the settings (if needed) in the WP Admin Panel &raquo; Settings &raquo; Rocket Reader Opts
 
 == Changelog ==
+
+= 1.3 [10/10/2014] =
+* NEW: a popup can be used to read the animated text (optional)
+* NEW: plugin has been fully localized
+* NEW: dutch language support [nl_NL] added
+* CHANGE: fixed some bugs and many improvements
 
 = 1.2.3 [07/30/2014] =
 * Minor updates
@@ -94,4 +110,3 @@ NO WARRANTY, USE AT OWN RISK!
 = How can I enable the Rocket Reader for a specific post / page? =
 * Add a custom field to that specific post / page named 'enable_rocket_reader' and give it the value 'Y' (for YES).
 See http://cagewebdev.com/rocket-reader/ for more info.
-
