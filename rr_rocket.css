@@ -6,6 +6,17 @@
 @charset "utf-8";
 .rr_wrapper {
 	margin-bottom: 10px;
+	padding: 8px;
+	z-index: 99999 !important;
+}
+.rr_wrapper_popup {
+	padding: 8px;
+	position: fixed;
+	z-index: 99999 !important;
+	width: 550px !important;
+	height: 150px !important;
+	left: 50%;
+	top: 50%;
 }
 .rr_reading_pane {
 	display: none;
