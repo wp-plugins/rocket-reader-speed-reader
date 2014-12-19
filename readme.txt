@@ -42,11 +42,15 @@ http://wordpress.org/plugins/rocket-reader/
 * English [en_US] - default language, by Rolf van Gelder, CAGE Web Design - http://cagewebdev.com
 * Dutch   [nl_NL] - translated by Rolf van Gelder, CAGE Web Design - http://cagewebdev.com
 
-= Other WordPress plugins by Rolf van Gelder =
+= Plugins by Rolf van Gelder =
 <em>Optimize Database after Deleting Revisions</em><br />
-https://wordpress.org/plugins/rvg-optimize-database/<br />
-<em>Order Your Posts Manually</em><br />
-http://wordpress.org/plugins/order-your-posts-manually/
+http://wordpress.org/plugins/rvg-optimize-database/<br />
+<em>Rocket Reader (Speed reader)</em><br />
+http://wordpress.org/plugins/rocket-reader-speed-reader/<br />
+<em>Order your Posts Manually</em><br />
+http://wordpress.org/plugins/order-your-posts-manually/<br />
+<em>Float to Top Button</em><br />
+http://wordpress.org/plugins/float-to-top-button/
 
 = Disclaimer =
 NO WARRANTY, USE AT OWN RISK!
