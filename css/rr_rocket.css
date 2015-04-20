@@ -2,6 +2,8 @@
  *
  *	ROCKET READER STYLES
  *
+ *	Revision: 04/20/2015
+ *
  *********************************************************************************************/
 @charset "utf-8";
 .rr_wrapper {
@@ -14,7 +16,7 @@
 	position: fixed;
 	z-index: 99999 !important;
 	width: 550px !important;
-	height: 150px !important;
+	height: 140px !important;
 	left: 50%;
 	top: 50%;
 }
@@ -41,6 +43,8 @@
 	display: none;
 	float: left;
 	position: relative;
+	margin-top: 4px;
+	font-size: 12px;
 }
 .rr_button_container {
 	float: right;
@@ -51,7 +55,11 @@
 }
 .rr_button {
 	float: right;
+	margin-top: -2px;
 	margin-left: 5px;
+	width: 30px;
+	height: 30px;
+	padding: 0px !important;
 }
 .rr_btn_play {
 	display: none;

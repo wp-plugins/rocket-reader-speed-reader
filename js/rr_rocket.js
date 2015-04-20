@@ -1,8 +1,10 @@
 /********************************************************************************************
-
-	ROCKET READER JQUERY PLUGIN
-
-*********************************************************************************************/
+ *
+ *	ROCKET READER JQUERY PLUGIN
+ *
+ *	Revision: 04/20/2015
+ *
+ ********************************************************************************************/
 
 // WPM FROM OPTIONS (WPM)
 var wpm           = rr_init_WPM;
@@ -21,7 +23,7 @@ jQuery( document ).ready(function() {
 		var postid = jQuery(this).attr("postid");
 		var rrhtml = '';
 	
-		rrhtml += '<div id="rr_credits'+postid+'" class="rr_credits">Rocket Reader v'+rr_init_version+', by <a href="http://rvg.cage.nl/" target="_blank">Rolf van Gelder</a>, CAGE Web Design (<a href="http://cagewebdev.com/rocket-reader/" target="_blank">http://cagewebdev.com/rocket-reader/</a>)</div>';
+		// rrhtml += '<div id="rr_credits'+postid+'" class="rr_credits">Rocket Reader v'+rr_init_version+', by <a href="http://rvg.cage.nl/" target="_blank">Rolf van Gelder</a>, CAGE Web Design (<a href="http://cagewebdev.com/rocket-reader/" target="_blank">http://cagewebdev.com/rocket-reader/</a>)</div>';
 		rrhtml += '<div id="rr_reading_pane'+postid+'" class="rr_reading_pane">';
 		rrhtml += '  <div id="rr_word_wrapper'+postid+'" class="rr_word_wrapper">';
 		rrhtml += '    <div id="rr_word'+postid+'" class="rr_word"></div>';
@@ -62,27 +64,27 @@ jQuery( document ).ready(function() {
 		}
 		
 		rrhtml += '  <div id="rr_playing_controls'+postid+'" class="rr_playing_controls">';
-		rrhtml += '    <div id="rr_btn_close'+postid+'" class="rr_button">';
-        rrhtml += '      <button onclick="rr_close();" title="'+rr_close+'">&times;</button>';
+		rrhtml += '    <div id="rr_btn_close'+postid+'">';
+        rrhtml += '      <button class="rr_button" onclick="rr_close();" title="'+rr_close+'">&times;</button>';
 		rrhtml += '    </div>';
-		rrhtml += '    <div id="rr_btn_pause'+postid+'" class="rr_button">';
-        rrhtml += '      <button onclick="rr_pause();" title="'+rr_pause+'">||</button>';
+		rrhtml += '    <div id="rr_btn_pause'+postid+'">';
+        rrhtml += '      <button class="rr_button" onclick="rr_pause();" title="'+rr_pause+'">||</button>';
       	rrhtml += '    </div>';
-		rrhtml += '    <div id="rr_btn_resume'+postid+'" class="rr_button">';
-        rrhtml += '      <button onclick="rr_resume('+postid+');" title="'+rr_resume+'">&gt;</button>';
+		rrhtml += '    <div id="rr_btn_resume'+postid+'">';
+        rrhtml += '      <button class="rr_button" onclick="rr_resume('+postid+');" title="'+rr_resume+'">&gt;</button>';
       	rrhtml += '    </div>';
-		rrhtml += '    <div id="rr_btn_plus'+postid+'" class="rr_button">';
-        rrhtml += '      <button onclick="rr_plus();" title="'+rr_increase_speed+'">+</button>';
+		rrhtml += '    <div id="rr_btn_plus'+postid+'">';
+        rrhtml += '      <button class="rr_button" onclick="rr_plus();" title="'+rr_increase_speed+'">+</button>';
       	rrhtml += '    </div>';
-		rrhtml += '    <div id="rr_btn_minus'+postid+'" class="rr_button">';
-        rrhtml += '      <button onclick="rr_minus();" title="'+rr_decrease_speed+'">-</button>';
+		rrhtml += '    <div id="rr_btn_minus'+postid+'">';
+        rrhtml += '      <button class="rr_button" onclick="rr_minus();" title="'+rr_decrease_speed+'">-</button>';
       	rrhtml += '    </div>';
-      	rrhtml += '    <div id="rr_btn_bold'+postid+'" class="rr_button">';
-        rrhtml += '      <button onclick="rr_font_weight();" title="'+rr_bold_on_off+'">b</button>';
+      	rrhtml += '    <div id="rr_btn_bold'+postid+'">';
+        rrhtml += '      <button class="rr_button" onclick="rr_font_weight();" title="'+rr_bold_on_off+'">b</button>';
       	rrhtml += '    </div>';
 		rrhtml += '  </div><!-- rr_playing_controls -->';
   		rrhtml += '</div><!-- rr_button_container -->';
-  		rrhtml += '<div id="rr_delay'+postid+'"></div>';
+  		rrhtml += '<div id="rr_delay'+postid+'" class="rr_delay"></div>';
   		rrhtml += '<br clear="all">';
 		
 		jQuery(this).html(rrhtml);
@@ -118,7 +120,7 @@ jQuery( document ).ready(function() {
 			currentPostID = postID;
 			if(use_popup == 'N')
 			{	jQuery("#rr_btn_play"+currentPostID).hide();
-				jQuery("#rr_wrapper"+currentPostID).css("height","155px");
+				jQuery("#rr_wrapper"+currentPostID).css("height","140px");
 			}
 			jQuery("#rr_credits"+currentPostID).show();
 			jQuery("#rr_btn_resume"+currentPostID).hide();
