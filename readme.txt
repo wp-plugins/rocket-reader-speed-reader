@@ -7,7 +7,7 @@ Tags: speed reader, speed-reader, speed reading, speed, reader, reading, post, p
 Author URI: http://cagewebdev.com
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.8
-Tested up to: 4.0
+Tested up to: 4.2
 Stable tag: 1.4.1
 Version: 1.4.1
 License: GPLv2 or later
@@ -58,10 +58,10 @@ NO WARRANTY, USE AT OWN RISK!
 == Changelog ==
 
 = 1.4.1 [04/20/2015] =
-* Something went wrong with the deployment...
+* Something went wrong with the deployment of 1.4...
 
 = 1.4 [04/20/2015] =
-* CHANGE: css improvement
+* CHANGE: css improvements
 * CHANGE: files moved to sub folders
 * CHANGE: other minor improvements
 
