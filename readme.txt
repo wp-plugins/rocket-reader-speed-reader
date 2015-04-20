@@ -7,9 +7,9 @@ Tags: speed reader, speed-reader, speed reading, speed, reader, reading, post, p
 Author URI: http://cagewebdev.com
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.8
-Tested up to: 4.2
-Stable tag: 1.3.3
-Version: 1.3.3
+Tested up to: 4.0
+Stable tag: 1.4
+Version: 1.4
 License: GPLv2 or later
 
 == Description ==
@@ -42,15 +42,9 @@ http://wordpress.org/plugins/rocket-reader/
 * English [en_US] - default language, by Rolf van Gelder, CAGE Web Design - http://cagewebdev.com
 * Dutch   [nl_NL] - translated by Rolf van Gelder, CAGE Web Design - http://cagewebdev.com
 
-= Plugins by Rolf van Gelder =
-<em>Optimize Database after Deleting Revisions</em><br />
-http://wordpress.org/plugins/rvg-optimize-database/<br />
-<em>Rocket Reader (Speed reader)</em><br />
-http://wordpress.org/plugins/rocket-reader-speed-reader/<br />
-<em>Order your Posts Manually</em><br />
-http://wordpress.org/plugins/order-your-posts-manually/<br />
-<em>Float to Top Button</em><br />
-http://wordpress.org/plugins/float-to-top-button/
+= Plugins by CAGE Web Design | Rolf van Gelder =
+WordPress plugins created by CAGE Web Design | Rolf van Gelder<br />
+http://cagewebdev.com/index.php/wordpress-plugins/
 
 = Disclaimer =
 NO WARRANTY, USE AT OWN RISK!
@@ -62,6 +56,11 @@ NO WARRANTY, USE AT OWN RISK!
 * Change the settings (if needed) in the WP Admin Panel &raquo; Settings &raquo; Rocket Reader Opts
 
 == Changelog ==
+
+= 1.4 [04/20/2015] =
+* CHANGE: css improvement
+* CHANGE: files moved to sub folders
+* CHANGE: other minor improvements
 
 = 1.3.3 [10/24/2014] =
 * Some minor updates

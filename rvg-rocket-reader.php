@@ -1,10 +1,10 @@
 <?php
-$rr_version      = '1.3.3';
-$rr_release_date = '10/24/2014';
+$rr_version      = '1.4';
+$rr_release_date = '04/20/2014';
 $rr_use_popup    = 'N';
 /**
  * @package Rocket Reader
- * @version 1.3.3
+ * @version 1.4
  */
  
 /*
@@ -12,7 +12,7 @@ Plugin Name: Rocket Reader
 Plugin URI: http://cagewebdev.com/rocket-reader/
 Description: Adds a control to read the text of posts and pages using a speed reading technique
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
-Version: 1.3.3
+Version: 1.4
 Author URI: http://cagewebdev.com
 */
 
@@ -23,7 +23,7 @@ Author URI: http://cagewebdev.com
 ******************************************************************************/
 function rr_action_init()
 {   // TEXT DOMAIN
-    load_plugin_textdomain('rocket-reader-speed-reader', false, dirname(plugin_basename(__FILE__)));
+    load_plugin_textdomain('rocket-reader-speed-reader', false, dirname(plugin_basename(__FILE__)).'/languages');
 }
 // INIT HOOK
 add_action('init', 'rr_action_init');
@@ -136,57 +136,86 @@ alert('<?php echo $msg;?>');
 <div id="rr_options_form">
   <p>
   <h1>Rocket Reader v<?php echo $rr_version; ?></h1>
-  <em><strong><?php _e('A Speed Reading Plugin: read the content of a web page / blog up to 80 percent faster','rocket-reader-speed-reader')?></strong></em>
+  <em><strong>
+  <?php _e('A Speed Reading Plugin: read the content of a web page / blog up to 80 percent faster','rocket-reader-speed-reader')?>
+  </strong></em>
   </p>
-  <p><?php _e('Author','rocket-reader-speed-reader')?>: <strong>Rolf van Gelder - CAGE Web Design, Eindhoven, <?php _e('The Netherlands','rocket-reader-speed-reader')?></strong><br>
+  <p>
+    <?php _e('Author','rocket-reader-speed-reader')?>
+    : <strong>Rolf van Gelder - CAGE Web Design, Eindhoven,
+    <?php _e('The Netherlands','rocket-reader-speed-reader')?>
+    </strong><br>
     Website: <a href="http://cagewebdev.com" target="_blank">http://cagewebdev.com</a><br />
-    <?php _e('Plugin page','rocket-reader-speed-reader')?>: <a href="http://cagewebdev.com/rocket-reader/" target="_blank">http://cagewebdev.com/rocket-reader/</a><br />
-    <?php _e('Download page','rocket-reader-speed-reader')?>: <a href="http://wordpress.org/plugins/rvg-rocket-reader/" target="_blank">http://wordpress.org/plugins/rvg-rocket-reader/</a> </p>
+    <?php _e('Plugin page','rocket-reader-speed-reader')?>
+    : <a href="http://cagewebdev.com/rocket-reader/" target="_blank">http://cagewebdev.com/rocket-reader/</a><br />
+    <?php _e('Download page','rocket-reader-speed-reader')?>
+    : <a href="http://wordpress.org/plugins/rvg-rocket-reader/" target="_blank">http://wordpress.org/plugins/rvg-rocket-reader/</a> </p>
   <br />
   <hr />
   <br />
-  <h2><?php _e('Rocket Reader Options','rocket-reader-speed-reader')?>:</h2>
+  <h2>
+    <?php _e('Rocket Reader Options','rocket-reader-speed-reader')?>
+    :</h2>
   <form action="" method="post" name="options_form">
     <input name="action" type="hidden" value="save_options" />
-    <label for="rr_wpm"><?php _e('Initial <strong>Number Of Words Per Minute</strong> (will be overridden by the user\'s cookie, if set)','rocket-reader-speed-reader')?>:</label>
+    <label for="rr_wpm">
+      <?php _e('Initial <strong>Number Of Words Per Minute</strong> (will be overridden by the user\'s cookie, if set)','rocket-reader-speed-reader')?>
+      :</label>
     <br />
     <input type="text" name="rr_wpm" id="rr_wpm" size="8" value="<?php echo $rr_wpm; ?>" />
     <br />
     <br />
-    <label for="rr_wpm"><?php _e('Use a <strong>Popup Window</strong> for displaying the animated text','rocket-reader-speed-reader')?>:</label>
+    <label for="rr_wpm">
+      <?php _e('Use a <strong>Popup Window</strong> for displaying the animated text','rocket-reader-speed-reader')?>
+      :</label>
     <br />
-    <input name="rr_use_popup" id="rr_use_popup" type="checkbox" value="Y" />      
-    <br /><br />
+    <input name="rr_use_popup" id="rr_use_popup" type="checkbox" value="Y" />
+    <br />
+    <br />
     <hr />
     <br />
-    <strong><?php _e('The following colors should be in "#FFF" or "#FFFFFF" format!','rocket-reader-speed-reader')?></strong><br />
+    <strong>
+    <?php _e('The following colors should be in "#FFF" or "#FFFFFF" format!','rocket-reader-speed-reader')?>
+    </strong><br />
     <br />
-    <label for="rr_cont_bgcolor"><strong><?php _e('Background color container','rocket-reader-speed-reader')?>:</strong></label>
+    <label for="rr_cont_bgcolor"><strong>
+      <?php _e('Background color container','rocket-reader-speed-reader')?>
+      :</strong></label>
     <br />
     <input type="text" name="rr_cont_bgcolor" id="rr_cont_bgcolor" size="8" value="<?php echo $rr_cont_bgcolor; ?>" />
     <br />
     <br />
-    <label for="rr_cont_bordercolor"><strong><?php _e('Border color container','rocket-reader-speed-reader')?>:</strong></label>
+    <label for="rr_cont_bordercolor"><strong>
+      <?php _e('Border color container','rocket-reader-speed-reader')?>
+      :</strong></label>
     <br />
     <input type="text" name="rr_cont_bordercolor" id="rr_cont_bordercolor" size="8" value="<?php echo $rr_cont_bordercolor; ?>" />
     <br />
-    <br />    
-    <label for="rr_textcolor"><strong><?php _e('Text color','rocket-reader-speed-reader')?>:</strong></label>
+    <br />
+    <label for="rr_textcolor"><strong>
+      <?php _e('Text color','rocket-reader-speed-reader')?>
+      :</strong></label>
     <br />
     <input type="text" name="rr_textcolor" id="rr_textcolor" size="8" value="<?php echo $rr_textcolor; ?>" />
     <br />
     <br />
-    <label for="rr_bgcolor"><strong><?php _e('Background color','rocket-reader-speed-reader')?>:</strong></label>
+    <label for="rr_bgcolor"><strong>
+      <?php _e('Background color','rocket-reader-speed-reader')?>
+      :</strong></label>
     <br />
     <input type="text" name="rr_bgcolor" id="rr_bgcolor" size="8" value="<?php echo $rr_bgcolor; ?>" />
     <br />
     <br />
-    <label for="rr_bordercolor"><strong><?php _e('Border color','rocket-reader-speed-reader')?>:</strong></label>
+    <label for="rr_bordercolor"><strong>
+      <?php _e('Border color','rocket-reader-speed-reader')?>
+      :</strong></label>
     <br />
     <input type="text" name="rr_bordercolor" id="rr_bordercolor" size="8" value="<?php echo $rr_bordercolor; ?>" />
     <br />
     <br />
-    <label for="rr_fpc"><strong><?php _e('Focal point color','rocket-reader-speed-reader')?>:</strong></label>
+    <label for="rr_fpc"><strong>
+      <?php _e('Focal point color','rocket-reader-speed-reader')?>
+      :</strong></label>
     <br />
     <input type="text" name="rr_fpc" id="rr_fpc" size="8" value="<?php echo $rr_fpc; ?>" />
     <br />
@@ -207,11 +236,15 @@ alert('<?php echo $msg;?>');
   <br />
   <hr />
   <br />
-<?php
+  <?php
 	// FROM v1.2.2
 ?>
-  <strong><?php _e('A quick way to ADD or DELETE the Rocket Reader to / from ALL posts / pages','rocket-reader-speed-reader')?>:</strong><br />
-  (<?php _e('To show the Rocket Reader on a specific post / page: add a custom field named <strong>enable_rocket_reader</strong> and give it the value <strong>Y</strong>','rocket-reader-speed-reader')?>)<br />
+  <strong>
+  <?php _e('A quick way to ADD or DELETE the Rocket Reader to / from ALL posts / pages','rocket-reader-speed-reader')?>
+  :</strong><br />
+  (
+  <?php _e('To show the Rocket Reader on a specific post / page: add a custom field named <strong>enable_rocket_reader</strong> and give it the value <strong>Y</strong>','rocket-reader-speed-reader')?>
+  )<br />
   <br />
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
@@ -238,8 +271,8 @@ alert('<?php echo $msg;?>');
 *********************************************************************************************/
 function rr_load_scripts_styles()
 {
-	wp_enqueue_script('rr_rocket', plugin_dir_url(__FILE__) . 'rr_rocket.js',array('jquery'),'0.1',true);
-	wp_enqueue_style ('rr', plugin_dir_url(__FILE__) . 'rr_rocket.css',false,'0.1','all');
+	wp_enqueue_script('rr_rocket', plugin_dir_url(__FILE__) . 'js/rr_rocket.js',array('jquery'),'0.1',true);
+	wp_enqueue_style ('rr', plugin_dir_url(__FILE__) . 'css/rr_rocket.css',false,'0.1','all');
 } // rr_load_scripts_styles()
 
 
