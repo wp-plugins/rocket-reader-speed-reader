@@ -1,6 +1,6 @@
 === Rocket Reader (Speed-Reader) ===
 Contributors: CAGE Web Design | Rolf van Gelder
-Donate link: http://cagewebdev.com
+Donate link: http://cagewebdev.com/index.php/donations/
 Plugin Name: Rocket Reader (Speed-Reader)
 Plugin URI: http://cagewebdev.com/rocket-reader
 Tags: speed reader, speed-reader, speed reading, speed, reader, reading, post, posts, page, pages, faster reading
