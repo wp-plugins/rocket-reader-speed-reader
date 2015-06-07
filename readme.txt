@@ -1,15 +1,15 @@
 === Rocket Reader (Speed-Reader) ===
 Contributors: CAGE Web Design | Rolf van Gelder
-Donate link: http://cagewebdev.com/index.php/donations-rr/
+Donate link: http://cagewebdev.com
 Plugin Name: Rocket Reader (Speed-Reader)
 Plugin URI: http://cagewebdev.com/rocket-reader
 Tags: speed reader, speed-reader, speed reading, speed, reader, reading, post, posts, page, pages, faster reading
 Author URI: http://cagewebdev.com
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.8
-Tested up to: 4.2.2
-Stable tag: 1.4.1
-Version: 1.4.1
+Tested up to: 4.2
+Stable tag: 1.5.0
+Version: 1.5.0
 License: GPLv2 or later
 
 == Description ==
@@ -56,6 +56,11 @@ NO WARRANTY, USE AT OWN RISK!
 * Change the settings (if needed) in the WP Admin Panel &raquo; Settings &raquo; Rocket Reader Opts
 
 == Changelog ==
+= 1.5.0 [06/07/2015] =
+* NEW: added a new option: Minimum Number of Words for showing the Rocket Reader button
+* NEW: a link to the settings page on the main plugin page
+* BUG FIX: lt, gt and amp replacement removed
+* CHANGE: several minor changes / updates
 
 = 1.4.1 [04/20/2015] =
 * Something went wrong with the deployment of 1.4...
