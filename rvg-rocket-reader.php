@@ -1,10 +1,10 @@
 <?php
-$rr_version      = '1.4.1';
-$rr_release_date = '04/20/2014';
+$rr_version      = '1.5.0';
+$rr_release_date = '06/07/2015';
 $rr_use_popup    = 'N';
 /**
  * @package Rocket Reader
- * @version 1.4.1
+ * @version 1.5.0
  */
  
 /*
@@ -12,7 +12,7 @@ Plugin Name: Rocket Reader
 Plugin URI: http://cagewebdev.com/rocket-reader/
 Description: Adds a control to read the text of posts and pages using a speed reading technique
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
-Version: 1.4.1
+Version: 1.5.0
 Author URI: http://cagewebdev.com
 */
 
@@ -44,6 +44,21 @@ add_action( 'admin_menu', 'rr_admin_menu' );
 
 
 /********************************************************************************************
+ *
+ *	SHOW A LINK TO THE PLUGIN SETTINGS ON THE MAIN PLUGINS PAGE
+ *
+ *	Since: v1.5.0
+ *
+ ********************************************************************************************/
+function rr_settings_link($links)
+{ 
+  array_unshift($links, '<a href="options-general.php?page=rr_admin">Settings</a>'); 
+  return $links;
+} // rr_settings_link()
+add_filter('plugin_action_links_'.plugin_basename(__FILE__), 'rr_settings_link');
+
+
+/********************************************************************************************
 
 	CREATE THE OPTIONS PAGE
 
@@ -63,6 +78,8 @@ function rr_options_page()
 		$usepopup = 'N';
 		if(isset($_REQUEST['rr_use_popup'])) $usepopup = $_REQUEST['rr_use_popup'];
 		update_option('rr_wpm', $_REQUEST['rr_wpm']);
+		// Since v1.5.0
+		update_option('rr_minimum_words', $_REQUEST['rr_minimum_words']);
 		update_option('rr_use_popup', $usepopup);
 		update_option('rr_cont_bgcolor', $_REQUEST['rr_cont_bgcolor']);
 		update_option('rr_cont_bordercolor', $_REQUEST['rr_cont_bordercolor']);		
@@ -106,6 +123,10 @@ alert('<?php echo $msg;?>');
 
 	$rr_wpm = get_option('rr_wpm');
 	if(!$rr_wpm) $rr_wpm = '300';
+	
+	// Since v1.5.0
+	$rr_minimum_words = get_option('rr_minimum_words');
+	if(!$rr_minimum_words) $rr_minimum_words = '0';	
 
 	$rr_use_popup = get_option('rr_use_popup');
 	if(!$rr_use_popup) $rr_use_popup = 'N';
@@ -149,7 +170,9 @@ alert('<?php echo $msg;?>');
     <?php _e('Plugin page','rocket-reader-speed-reader')?>
     : <a href="http://cagewebdev.com/rocket-reader/" target="_blank">http://cagewebdev.com/rocket-reader/</a><br />
     <?php _e('Download page','rocket-reader-speed-reader')?>
-    : <a href="http://wordpress.org/plugins/rvg-rocket-reader/" target="_blank">http://wordpress.org/plugins/rvg-rocket-reader/</a> </p>
+    : <a href="http://wordpress.org/plugins/rvg-rocket-reader/" target="_blank">http://wordpress.org/plugins/rvg-rocket-reader/</a><br />    
+    <?php _e('Donation page','rocket-reader-speed-reader')?>
+    : <a href="http://cagewebdev.com/index.php/donations-rr/" target="_blank">http://cagewebdev.com/index.php/donations-rr/</a> </p>
   <br />
   <hr />
   <br />
@@ -161,11 +184,19 @@ alert('<?php echo $msg;?>');
     <label for="rr_wpm">
       <?php _e('Initial <strong>Number Of Words Per Minute</strong> (will be overridden by the user\'s cookie, if set)','rocket-reader-speed-reader')?>
       :</label>
-    <br />
+    <br />    
     <input type="text" name="rr_wpm" id="rr_wpm" size="8" value="<?php echo $rr_wpm; ?>" />
+    <br />     
+    <br />
+    <!-- Since v1.5.0 -->
+    <label for="rr_minimum_words">
+      <?php _e('Minimum <strong>Number of Words</strong> per post / page for showing the Rocket Reader button (\'0\' means NO minimum)','rocket-reader-speed-reader')?>
+      :</label>
+    <br />    
+    <input type="text" name="rr_minimum_words" id="rr_minimum_words" size="8" value="<?php echo $rr_minimum_words; ?>" />
     <br />
     <br />
-    <label for="rr_wpm">
+    <label for="rr_use_popup">
       <?php _e('Use a <strong>Popup Window</strong> for displaying the animated text','rocket-reader-speed-reader')?>
       :</label>
     <br />
@@ -328,14 +359,21 @@ function rr_add_control($content)
 	$ex = '';
 	$return = $ex.'<script type="text/javascript"> var words'.get_the_ID().' = [';
 	preg_match_all("/[\p{L}\p{M}\{0-9}\{-|?|!|%}]+/u", $c, $result, PREG_PATTERN_ORDER);
+	
+	// Since v1.5.0
+	$rr_minimum_words = get_option('rr_minimum_words');
+	if ($rr_minimum_words)
+		if(count($result[0]) < $rr_minimum_words) return $content;
+	
 	for ($i = 0; $i < count($result[0]); $i++)
 	{	$w = $result[0][$i];
 		if($i) $return .= ',';
 		$w = str_replace("xyx", '-', $w);
 		$w = str_replace("yxy", "...", $w);
-		$w = str_replace("amp", "&", $w);
-		$w = str_replace("lt", "<", $w);
-		$w = str_replace("gt", ">", $w);
+		# REMOVED IN v1.5.0
+		# $w = str_replace("amp", "&", $w);
+		# $w = str_replace("lt", "<", $w);
+		# $w = str_replace("gt", ">", $w);
 		$return .= '"'.$w.'"';
 	}
 	$return .= ']</script>';
